@@ -5,6 +5,7 @@
 
 #album-page-frame {
   border: 10px solid black;
+  position: relative;
 }
 
 #album-page-frame.landscape {
@@ -17,7 +18,29 @@
   width: 450px;
 }
 
-#cropped-result-image {
+.cropped-result-image {
+  position: absolute;
+  top: 0px;
+  left: 0px;
   max-width: 100%;
   max-height: 100%;
+}
+
+#modal-import-container {
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-column-gap: 15px;
+  grid-row-gap: 15px;
+}
+
+#modal-import-container img {
+  max-width: 500px;
+  max-height: 500px;
+}
+
+#controls-container {
+  display: grid;
+  grid-column-gap: 10px;
+  grid-auto-flow: column;
+  grid-auto-columns: fit-content(300px);
 }
