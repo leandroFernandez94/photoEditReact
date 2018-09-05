@@ -6,7 +6,12 @@ class ImportModalContent extends React.Component {
       <div id="modal-import-container">
         <h3>Select Picture:</h3>
         {this.props.publicFiles.map(filePath => (
-          <img src={filePath} onClick={() => this.props.onImgPick(filePath)} />
+          <img
+            key={filePath}
+            src={filePath}
+            alt="noImage"
+            onClick={() => this.props.onImgPick(filePath)}
+          />
         ))}
       </div>
     );

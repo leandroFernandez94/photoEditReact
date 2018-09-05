@@ -4,6 +4,7 @@ import Cropper from "react-cropper";
 import Modal from "react-responsive-modal";
 
 import ImportModalContent from "./ImportModalContent";
+import AlbumPageContainer from "./AlbumPageContainer";
 
 import { getPublicFiles } from "./FilesService";
 
@@ -17,9 +18,10 @@ class Demo extends Component {
   state = {
     frameMode: LANDSCAPE, //or PORTRAIT
     publicFiles: [],
-    croppedImages: [],
+    croppedImages: {},
     importModal: false,
-    workingPicturePath: null
+    workingPicturePath: null,
+    croppedIds: 0
   };
 
   componentWillMount() {
@@ -28,9 +30,22 @@ class Demo extends Component {
 
   cropImage = () => {
     const dataUrl = this.refs.cropper.getCroppedCanvas().toDataURL();
-    this.setState(({ croppedImages }) => ({
-      croppedImages: [...croppedImages, dataUrl]
-    }));
+    this.setState(
+      ({ croppedImages, croppedIds }) => ({
+        //croppedImages: [...croppedImages, dataUrl]
+        croppedImages: {
+          ...croppedImages,
+          [this.state.croppedIds]: {
+            id: this.state.croppedIds,
+            path: dataUrl,
+            top: 0,
+            left: 0
+          }
+        },
+        croppedIds: croppedIds + 1
+      }),
+      () => console.log(this.state)
+    );
   };
 
   toggleFrameMode = () => {
@@ -57,6 +72,19 @@ class Demo extends Component {
 
   handleImgPick = imgPath => {
     this.setState({ workingPicturePath: imgPath }, this.onCloseModal);
+  };
+
+  handleImageMove = (key, left, top) => {
+    this.setState(({ croppedImages }) => ({
+      croppedImages: {
+        ...croppedImages,
+        [key]: {
+          ...croppedImages[key],
+          left,
+          top
+        }
+      }
+    }));
   };
 
   render() {
@@ -86,15 +114,11 @@ class Demo extends Component {
         </div>
         <hr />
         <div id="album-page-container">
-          <div
-            id="album-page-frame"
-            className={this.state.frameMode}
-            ref="albumPageFrame"
-          >
-            {this.state.croppedImages.map(cropped => (
-              <img class="cropped-result-image" src={cropped} />
-            ))}
-          </div>
+          <AlbumPageContainer
+            frameMode={this.state.frameMode}
+            croppedImages={this.state.croppedImages}
+            handleImageMove={this.handleImageMove}
+          />
         </div>
         <Modal open={this.state.importModal} onClose={this.onCloseModal} center>
           <ImportModalContent
