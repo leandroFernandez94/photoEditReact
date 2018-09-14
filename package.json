@@ -5,6 +5,8 @@
   "keywords": [],
   "main": "src/index.js",
   "dependencies": {
+    "html2canvas": "^1.0.0-alpha.12",
+    "jspdf": "^1.4.1",
     "react": "16.4.2",
     "react-cropper": "1.0.1",
     "react-dnd": "^5.0.0",

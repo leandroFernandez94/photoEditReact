@@ -4,18 +4,21 @@
 }
 
 #album-page-frame {
-  border: 10px solid black;
   position: relative;
 }
 
+#album-page-view {
+  border: 10px solid black;
+}
+
 #album-page-frame.landscape {
-  height: 450px;
-  width: 800px;
+  height: 595.28px;
+  width: 841.89px;
 }
 
 #album-page-frame.portrait {
-  height: 800px;
-  width: 450px;
+  height: 841.89px;
+  width: 595.28px;
 }
 
 .cropped-result-image {

@@ -2,17 +2,22 @@ import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import Cropper from "react-cropper";
 import Modal from "react-responsive-modal";
+import html2canvas from "html2canvas";
+import * as jsPDF from "jspdf";
 
 import ImportModalContent from "./ImportModalContent";
 import AlbumPageContainer from "./AlbumPageContainer";
 
 import { getPublicFiles } from "./FilesService";
+import {
+  LANDSCAPE,
+  PORTRAIT,
+  LANDSCAPE_WIDTH,
+  LANDSCAPE_HEIGHT
+} from "./ItemTypes";
 
 import "cropperjs/dist/cropper.css";
 import "./styles.css";
-
-const LANDSCAPE = "landscape";
-const PORTRAIT = "portrait";
 
 class Demo extends Component {
   state = {
@@ -29,7 +34,10 @@ class Demo extends Component {
   }
 
   cropImage = () => {
-    const dataUrl = this.refs.cropper.getCroppedCanvas().toDataURL();
+    const canvas = this.refs.cropper.getCroppedCanvas();
+    const dataUrl = canvas.toDataURL();
+    const { width, height } = canvas;
+
     this.setState(
       ({ croppedImages, croppedIds }) => ({
         //croppedImages: [...croppedImages, dataUrl]
@@ -39,7 +47,9 @@ class Demo extends Component {
             id: this.state.croppedIds,
             path: dataUrl,
             top: 0,
-            left: 0
+            left: 0,
+            width,
+            height
           }
         },
         croppedIds: croppedIds + 1
@@ -87,6 +97,24 @@ class Demo extends Component {
     }));
   };
 
+  exportFrameToPDF = () => {
+    const input = document.getElementById("album-page-frame");
+    html2canvas(input, {
+      width: LANDSCAPE_WIDTH,
+      height: LANDSCAPE_HEIGHT,
+      scale: 1.335
+    }).then(canvas => {
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPDF({
+        orientation: this.state.frameMode,
+        unit: "px"
+      });
+      pdf.addImage(imgData, "JPEG", 0, 0);
+      // pdf.output('dataurlnewwindow');
+      pdf.save("download.pdf");
+    });
+  };
+
   render() {
     return (
       <div>
@@ -95,9 +123,9 @@ class Demo extends Component {
             ref="cropper"
             src={this.state.workingPicturePath}
             style={{ height: 400, width: "100%" }}
-            // Cropper.js options
             rotatable
-            guides={false}
+            aspectRatio={1.4151226}
+            guides={true}
           />
         )}
         <hr />
@@ -111,14 +139,18 @@ class Demo extends Component {
           </button>
           <button onClick={this.rotateLeft}>Rotate left</button>
           <button onClick={this.rotateRight}>Rotate right</button>
+          <button onClick={this.exportFrameToPDF}>Export PDF</button>
         </div>
         <hr />
+
         <div id="album-page-container">
-          <AlbumPageContainer
-            frameMode={this.state.frameMode}
-            croppedImages={this.state.croppedImages}
-            handleImageMove={this.handleImageMove}
-          />
+          <div id="album-page-view">
+            <AlbumPageContainer
+              frameMode={this.state.frameMode}
+              croppedImages={this.state.croppedImages}
+              handleImageMove={this.handleImageMove}
+            />
+          </div>
         </div>
         <Modal open={this.state.importModal} onClose={this.onCloseModal} center>
           <ImportModalContent

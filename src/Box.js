@@ -1,15 +1,15 @@
 import * as React from "react";
 import { DragSource } from "react-dnd";
-import ItemTypes from "./ItemTypes";
+import { BOX } from "./ItemTypes";
 
 const boxSource = {
   beginDrag(props) {
-    const { id, left, top } = props;
-    return { id, left, top };
+    const { id, left, top, width, height } = props;
+    return { id, left, top, width, height };
   }
 };
 
-export default DragSource(ItemTypes.BOX, boxSource, (connect, monitor) => ({
+export default DragSource(BOX, boxSource, (connect, monitor) => ({
   connectDragSource: connect.dragSource(),
   isDragging: monitor.isDragging()
 }))(
