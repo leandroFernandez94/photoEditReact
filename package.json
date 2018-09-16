@@ -12,6 +12,7 @@
     "react-dnd": "^5.0.0",
     "react-dnd-html5-backend": "^5.0.1",
     "react-dom": "16.4.2",
+    "react-resizable": "^1.7.5",
     "react-responsive-modal": "^3.3.0",
     "react-scripts": "1.1.4"
   },

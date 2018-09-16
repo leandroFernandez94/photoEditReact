@@ -3,7 +3,6 @@ import React from "react";
 import { DropTarget, DragDropContext } from "react-dnd";
 
 import HTML5Backend from "react-dnd-html5-backend";
-import ItemTypes from "./ItemTypes";
 import Box from "./Box";
 
 import {

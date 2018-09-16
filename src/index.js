@@ -13,7 +13,8 @@ import {
   LANDSCAPE,
   PORTRAIT,
   LANDSCAPE_WIDTH,
-  LANDSCAPE_HEIGHT
+  LANDSCAPE_HEIGHT,
+  A4_SCALE
 } from "./ItemTypes";
 
 import "cropperjs/dist/cropper.css";
@@ -102,7 +103,7 @@ class Demo extends Component {
     html2canvas(input, {
       width: LANDSCAPE_WIDTH,
       height: LANDSCAPE_HEIGHT,
-      scale: 1.335
+      scale: A4_SCALE
     }).then(canvas => {
       const imgData = canvas.toDataURL("image/png");
       const pdf = new jsPDF({
@@ -124,8 +125,7 @@ class Demo extends Component {
             src={this.state.workingPicturePath}
             style={{ height: 400, width: "100%" }}
             rotatable
-            aspectRatio={1.4151226}
-            guides={true}
+            guides={false}
           />
         )}
         <hr />
