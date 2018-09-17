@@ -14,7 +14,9 @@ import {
   PORTRAIT,
   LANDSCAPE_WIDTH,
   LANDSCAPE_HEIGHT,
-  A4_SCALE
+  A4_SCALE,
+  PORTRAIT_WIDTH,
+  PORTRAIT_HEIGHT
 } from "./ItemTypes";
 
 import "cropperjs/dist/cropper.css";
@@ -124,8 +126,10 @@ class Demo extends Component {
   exportFrameToPDF = () => {
     const input = document.getElementById("album-page-frame");
     html2canvas(input, {
-      width: LANDSCAPE_WIDTH,
-      height: LANDSCAPE_HEIGHT,
+      width:
+        this.state.frameMode === LANDSCAPE ? LANDSCAPE_WIDTH : PORTRAIT_WIDTH,
+      height:
+        this.state.frameMode === LANDSCAPE ? LANDSCAPE_HEIGHT : PORTRAIT_HEIGHT,
       scale: A4_SCALE
     }).then(canvas => {
       const imgData = canvas.toDataURL("image/png");

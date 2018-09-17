@@ -18,7 +18,7 @@ export const calculateLandscapeMeazures = (width, height) => {
       } else
         return {
           height: LANDSCAPE_HEIGHT / 2,
-          width: (LANDSCAPE_HEIGHT * aspect) / 2
+          width: (LANDSCAPE_HEIGHT / 2) * aspect
         };
     } else {
       return {
