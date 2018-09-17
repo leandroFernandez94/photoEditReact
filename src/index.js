@@ -19,6 +19,10 @@ import {
 
 import "cropperjs/dist/cropper.css";
 import "./styles.css";
+import {
+  calculateLandscapeMeazures,
+  calculatePortraitMeazures
+} from "./ARHelpers";
 
 class Demo extends Component {
   state = {
@@ -37,8 +41,12 @@ class Demo extends Component {
   cropImage = () => {
     const canvas = this.refs.cropper.getCroppedCanvas();
     const dataUrl = canvas.toDataURL();
-    const { width, height } = canvas;
+    const { width, height } =
+      this.state.frameMode === LANDSCAPE
+        ? calculateLandscapeMeazures(canvas.width, canvas.height)
+        : calculatePortraitMeazures(canvas.width, canvas.height);
 
+    console.log(width, height);
     this.setState(
       ({ croppedImages, croppedIds }) => ({
         //croppedImages: [...croppedImages, dataUrl]
@@ -49,8 +57,8 @@ class Demo extends Component {
             path: dataUrl,
             top: 0,
             left: 0,
-            width,
-            height
+            width: width,
+            height: height
           }
         },
         croppedIds: croppedIds + 1
@@ -98,6 +106,21 @@ class Demo extends Component {
     }));
   };
 
+  handleImageResize = ({ key, width, height, ...position }) => {
+    this.setState(({ croppedImages }) => ({
+      croppedImages: {
+        ...croppedImages,
+        [key]: {
+          ...croppedImages[key],
+          left: position.x,
+          top: position.y,
+          width,
+          height
+        }
+      }
+    }));
+  };
+
   exportFrameToPDF = () => {
     const input = document.getElementById("album-page-frame");
     html2canvas(input, {
@@ -123,7 +146,7 @@ class Demo extends Component {
           <Cropper
             ref="cropper"
             src={this.state.workingPicturePath}
-            style={{ height: 400, width: "100%" }}
+            style={{ height: 500, width: "100%" }}
             rotatable
             guides={false}
           />
@@ -149,6 +172,7 @@ class Demo extends Component {
               frameMode={this.state.frameMode}
               croppedImages={this.state.croppedImages}
               handleImageMove={this.handleImageMove}
+              handleImageResize={this.handleImageResize}
             />
           </div>
         </div>

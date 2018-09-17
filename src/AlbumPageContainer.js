@@ -1,74 +1,53 @@
 import React from "react";
+import { Rnd } from "react-rnd";
 
-import { DropTarget, DragDropContext } from "react-dnd";
+export default class AlbumPageContainer extends React.Component {
+  renderCropped = key => {
+    const cropped = this.props.croppedImages[key];
+    const size = {
+      width: cropped.width,
+      height: cropped.height
+    };
+    const position = {
+      x: cropped.left,
+      y: cropped.top
+    };
 
-import HTML5Backend from "react-dnd-html5-backend";
-import Box from "./Box";
+    return (
+      <Rnd
+        key={key}
+        lockAspectRatio
+        bounds="parent"
+        size={size}
+        position={position}
+        onDragStop={(e, d) => {
+          this.props.handleImageMove(key, d.x, d.y);
+        }}
+        onResize={(e, direction, ref, delta, position) => {
+          this.props.handleImageResize({
+            key,
+            width: ref.style.width,
+            height: ref.style.height,
+            ...position
+          });
+        }}
+      >
+        <img
+          className="cropped-result-image"
+          src={cropped.path}
+          alt="noimage"
+          draggable="false"
+        />
+      </Rnd>
+    );
+  };
 
-import {
-  LANDSCAPE,
-  LANDSCAPE_HEIGHT,
-  LANDSCAPE_WIDTH,
-  PORTRAIT_HEIGHT,
-  PORTRAIT_WIDTH,
-  BOX
-} from "./ItemTypes";
-
-const boxTarget = {
-  drop(props, monitor, component) {
-    if (!component) {
-      return;
-    }
-    const item = monitor.getItem();
-    console.log(item);
-    const delta = monitor.getDifferenceFromInitialOffset();
-    const leftPosition = Math.round(item.left + delta.x);
-    const topPosition = Math.round(item.top + delta.y);
-
-    let left, top;
-    if (props.frameMode === LANDSCAPE) {
-      if (leftPosition + item.width > LANDSCAPE_WIDTH) {
-        left = LANDSCAPE_WIDTH - item.width;
-      } else left = leftPosition < 0 ? 0 : leftPosition;
-      if (topPosition + item.height > LANDSCAPE_HEIGHT) {
-        top = LANDSCAPE_HEIGHT - item.height;
-      } else top = topPosition < 0 ? 0 : topPosition;
-    } else {
-      if (leftPosition + item.width > PORTRAIT_WIDTH) {
-        left = PORTRAIT_WIDTH - item.width;
-      } else left = leftPosition < 0 ? 0 : leftPosition;
-      if (topPosition + item.height > PORTRAIT_HEIGHT) {
-        top = PORTRAIT_HEIGHT - item.height;
-      } else top = topPosition < 0 ? 0 : topPosition;
-    }
-
-    component.moveBox(item.id, left, top);
+  render() {
+    const { croppedImages } = this.props;
+    return (
+      <div id="album-page-frame" className={this.props.frameMode}>
+        {Object.keys(croppedImages).map(this.renderCropped)}
+      </div>
+    );
   }
-};
-
-export default DragDropContext(HTML5Backend)(
-  DropTarget(BOX, boxTarget, connect => ({
-    connectDropTarget: connect.dropTarget()
-  }))(
-    class AlbumPageContainer extends React.Component {
-      render() {
-        const { connectDropTarget, croppedImages } = this.props;
-        return (
-          connectDropTarget &&
-          connectDropTarget(
-            <div id="album-page-frame" className={this.props.frameMode}>
-              {Object.keys(croppedImages).map(key => {
-                return <Box {...croppedImages[key]} key={key} />;
-              })}
-            </div>
-          )
-        );
-      }
-
-      moveBox(key, left, top) {
-        console.log(left, top);
-        this.props.handleImageMove(key, left, top);
-      }
-    }
-  )
-);
+}
