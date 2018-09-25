@@ -3,16 +3,22 @@ import React from "react";
 class ImportModalContent extends React.Component {
   render() {
     return (
+
       <div id="modal-import-container">
-        <h3>Select Picture:</h3>
+        <h5> Imagenes :</h5>
+          <hr/>
+          <div className="row">
         {this.props.publicFiles.map(filePath => (
-          <img
-            key={filePath}
-            src={filePath}
-            alt="noImage"
-            onClick={() => this.props.onImgPick(filePath)}
-          />
+                <div className={ (filePath.split('/')[0] == 'emojis')? 'col-2' : 'col-6'} key={filePath}>
+                    <img
+                        src={filePath}
+                        alt="noImage"
+                        onClick={() => this.props.onImgPick(filePath)}
+                        style={{maxWidth: "100%"}}
+                    />
+                </div>
         ))}
+          </div>
       </div>
     );
   }

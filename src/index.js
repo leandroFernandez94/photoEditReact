@@ -4,11 +4,13 @@ import Cropper from "react-cropper";
 import Modal from "react-responsive-modal";
 import html2canvas from "html2canvas";
 import * as jsPDF from "jspdf";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './line-awesome/css/line-awesome.min.css'
 
 import ImportModalContent from "./ImportModalContent";
 import AlbumPageContainer from "./AlbumPageContainer";
 
-import { getPublicFiles } from "./FilesService";
+import {getBackgrounds, getEmoticones, getPublicFiles} from "./FilesService";
 import {
   LANDSCAPE,
   PORTRAIT,
@@ -31,8 +33,9 @@ class Demo extends Component {
     frameMode: LANDSCAPE, //or PORTRAIT
     publicFiles: [],
     croppedImages: {},
+      images: [],
     importModal: false,
-    workingPicturePath: null,
+    workingPicturePath: 'flores.jpg',
     croppedIds: 0
   };
 
@@ -70,9 +73,15 @@ class Demo extends Component {
   };
 
   toggleFrameMode = () => {
-    this.setState(({ frameMode }) => ({
-      frameMode: frameMode === PORTRAIT ? LANDSCAPE : PORTRAIT
-    }));
+
+      /*for( let i=0; i<this.state.croppedIds; i++){
+          let width = Math.min(this.state.croppedImages[i].width, 396)
+          this.handleImageResize( {key: i.toString(), width: width +'px', height: this.state.croppedImages[i].height +'px', x: 0, y: this.state.croppedImages[i].top})
+      }*/
+      this.setState(({ frameMode}) => ({
+          frameMode: frameMode === PORTRAIT ? LANDSCAPE : PORTRAIT,
+      }));
+
   };
 
   rotateLeft = () => {
@@ -91,11 +100,28 @@ class Demo extends Component {
     this.setState(prevState => ({ importModal: !prevState.importModal }));
   };
 
+    selectEmojis = () => {
+        getEmoticones().then(files => this.setState({ publicFiles: files }));
+        this.onOpenModal()
+    }
+
+  selectPictures = () => {
+      getPublicFiles().then(files => this.setState({ publicFiles: files }));
+      this.onOpenModal()
+  }
+
+  selectBackgrouds = () => {
+      getBackgrounds().then(files => this.setState({ publicFiles: files }));
+    this.onOpenModal()
+  }
+
   handleImgPick = imgPath => {
     this.setState({ workingPicturePath: imgPath }, this.onCloseModal);
+      //document.getElementById("cropper").classList.remove("d-none");
   };
 
   handleImageMove = (key, left, top) => {
+      console.log(key, left, top)
     this.setState(({ croppedImages }) => ({
       croppedImages: {
         ...croppedImages,
@@ -108,7 +134,7 @@ class Demo extends Component {
     }));
   };
 
-  handleImageResize = ({ key, width, height, ...position }) => {
+  handleImageResize = ({key, width, height, ...position}) => {
     this.setState(({ croppedImages }) => ({
       croppedImages: {
         ...croppedImages,
@@ -123,30 +149,60 @@ class Demo extends Component {
     }));
   };
 
-  exportFrameToPDF = () => {
+  saveImg = () => {
     const input = document.getElementById("album-page-frame");
     html2canvas(input, {
       width:
         this.state.frameMode === LANDSCAPE ? LANDSCAPE_WIDTH : PORTRAIT_WIDTH,
       height:
         this.state.frameMode === LANDSCAPE ? LANDSCAPE_HEIGHT : PORTRAIT_HEIGHT,
-      scale: A4_SCALE
+      scale: 2
     }).then(canvas => {
-      const imgData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF({
-        orientation: this.state.frameMode,
-        unit: "px"
-      });
-      pdf.addImage(imgData, "JPEG", 0, 0);
-      // pdf.output('dataurlnewwindow');
-      pdf.save("download.pdf");
+        console.log(canvas.toDataURL("image/png"))
+        let newImages = this.state.images
+            newImages.push({dataUrl: canvas.toDataURL("image/png"), orientation: this.state.frameMode})
+        this.setState(({images}) => ({images: newImages}))
+        //document.getElementById("cropper").classList.add("d-none");
+        this.deleteImg()
     });
   };
+
+  deleteImg = () => {
+      this.setState({croppedImages: {}, croppedIds: 0})
+      this.setState({workingPicturePath: 'flores.jpg'})
+  }
+
+  exportToPdf = () => {
+      const pdf = new jsPDF({
+          unit: "px",
+      });
+      pdf.addImage(this.state.images.pop().dataUrl, "JPEG", 0, 0);
+      this.state.images.forEach( imgData => {
+          pdf.addPage('a4', imgData.orientation)
+          pdf.addImage(imgData.dataUrl, "JPEG", 0, 0);
+      })
+      pdf.save("download.pdf");
+      // pdf.output('dataurlnewwindow');
+
+  }
+
+  refresh = () => {
+      this.refs.cropper.reset()
+  }
+
+
+  click = () => {
+      //this.state.publicFiles = []
+      //this.state.workingPicturePath = ''
+      //this.state.croppedImages = {}
+       // this.refs.cropper.move(1);
+    }
 
   render() {
     return (
         <div id="main-page">
       <div id="container">
+          <div id={'cropper'}>
         {this.state.workingPicturePath && (
           <Cropper
             ref="cropper"
@@ -156,18 +212,24 @@ class Demo extends Component {
             guides={false}
           />
         )}
+          </div>
         <hr />
-        <div id="controls-container">
-          <button onClick={this.onOpenModal}>Select Picture</button>
-          <button onClick={this.cropImage}>crop!</button>
-          <button onClick={this.toggleFrameMode}>
-            {`change to ${
-              this.state.frameMode === PORTRAIT ? LANDSCAPE : PORTRAIT
-            } mode`}
+        <div className={'row horizontal-center'}>
+
+          <button className={'btn btn-outline-info btn-sm btn-margin'} onClick={this.selectPictures}><i className={'la la-cloud-upload'}></i> Mis fotos</button>
+            <button className={'btn btn-outline-info btn-sm btn-margin'} onClick={this.selectBackgrouds}><i className={'la la-image'}></i></button>
+            <button className={'btn btn-outline-info btn-sm btn-margin'} onClick={this.selectEmojis}><i className={'la la-smile-o'}></i></button>
+            <button className={'btn btn-outline-info btn-sm btn-margin'} onClick={this.cropImage}><i className={'la la-cut'}></i></button>
+          <button className={'btn btn-outline-info btn-sm btn-margin'} disabled={this.state.croppedIds > 0} onClick={this.toggleFrameMode}>
+                {<i className={ (this.state.frameMode === PORTRAIT)? 'la la-toggle-right': 'la la-toggle-down'}></i>}
+                { (this.state.frameMode === PORTRAIT)? '':''}
           </button>
-          <button onClick={this.rotateLeft}>Rotate left</button>
-          <button onClick={this.rotateRight}>Rotate right</button>
-          <button onClick={this.exportFrameToPDF}>Export PDF</button>
+            <button className={'btn btn-outline-info btn-sm btn-margin'} onClick={this.rotateRight}><i className={ 'la la-rotate-right'}></i></button>
+          <button className={'btn btn-outline-info btn-sm btn-margin'} onClick={this.rotateLeft}><i className={ 'la la-rotate-left'}></i></button>
+            <button className={'btn btn-outline-info btn-sm btn-margin'} onClick={this.refresh}><i className={ 'la la-refresh'}></i></button>
+            <button className={'btn btn-outline-info btn-sm btn-margin'} onClick={this.deleteImg}><i className={ 'la la-trash'}></i> </button>
+            <button className={'btn btn-outline-info btn-sm btn-margin'} disabled={this.state.croppedIds == 0} onClick={this.saveImg}><i className={ 'la la-save'}></i> </button>
+            <button className={'btn btn-outline-info btn-sm btn-margin'} disabled={this.state.images.length == 0} onClick={this.exportToPdf}><i className={'la la-download '}> </i></button>
         </div>
         <hr />
 

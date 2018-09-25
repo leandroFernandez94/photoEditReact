@@ -60,7 +60,7 @@ export const calculatePortraitMeazures = (width, height) => {
         width: PORTRAIT_HEIGHT * aspect
       };
     }
-  } else if (width > PORTRAIT_HEIGHT) {
+  } else if (width > PORTRAIT_WIDTH) {
     return {
       width: PORTRAIT_WIDTH,
       height: PORTRAIT_WIDTH / aspect
