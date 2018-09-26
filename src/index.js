@@ -30,7 +30,7 @@ import {
 
 class Demo extends Component {
   state = {
-    frameMode: LANDSCAPE, //or PORTRAIT
+    frameMode: PORTRAIT, //or PORTRAIT
     publicFiles: [],
     croppedImages: {},
       images: [],
@@ -176,12 +176,14 @@ class Demo extends Component {
       const pdf = new jsPDF({
           unit: "px",
       });
+     // pdf.addPage('a4', this.state.images[0].orientation)
       pdf.addImage(this.state.images.pop().dataUrl, "JPEG", 0, 0);
       this.state.images.forEach( imgData => {
           pdf.addPage('a4', imgData.orientation)
           pdf.addImage(imgData.dataUrl, "JPEG", 0, 0);
       })
       pdf.save("download.pdf");
+      this.setState(({images}) => ({images: []}))
       // pdf.output('dataurlnewwindow');
 
   }
@@ -198,6 +200,10 @@ class Demo extends Component {
        // this.refs.cropper.move(1);
     }
 
+/*<button className={'btn btn-outline-info btn-sm btn-margin'} disabled={this.state.croppedIds > 0} onClick={this.toggleFrameMode}>
+{<i className={ (this.state.frameMode === PORTRAIT)? 'la la-toggle-right': 'la la-toggle-down'}></i>}
+{ (this.state.frameMode === PORTRAIT)? '':''}
+</button>*/
   render() {
     return (
         <div id="main-page">
@@ -220,10 +226,6 @@ class Demo extends Component {
             <button className={'btn btn-outline-info btn-sm btn-margin'} onClick={this.selectBackgrouds}><i className={'la la-image'}></i></button>
             <button className={'btn btn-outline-info btn-sm btn-margin'} onClick={this.selectEmojis}><i className={'la la-smile-o'}></i></button>
             <button className={'btn btn-outline-info btn-sm btn-margin'} onClick={this.cropImage}><i className={'la la-cut'}></i></button>
-          <button className={'btn btn-outline-info btn-sm btn-margin'} disabled={this.state.croppedIds > 0} onClick={this.toggleFrameMode}>
-                {<i className={ (this.state.frameMode === PORTRAIT)? 'la la-toggle-right': 'la la-toggle-down'}></i>}
-                { (this.state.frameMode === PORTRAIT)? '':''}
-          </button>
             <button className={'btn btn-outline-info btn-sm btn-margin'} onClick={this.rotateRight}><i className={ 'la la-rotate-right'}></i></button>
           <button className={'btn btn-outline-info btn-sm btn-margin'} onClick={this.rotateLeft}><i className={ 'la la-rotate-left'}></i></button>
             <button className={'btn btn-outline-info btn-sm btn-margin'} onClick={this.refresh}><i className={ 'la la-refresh'}></i></button>
