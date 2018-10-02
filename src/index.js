@@ -36,7 +36,8 @@ class Demo extends Component {
       images: [],
     importModal: false,
     workingPicturePath: 'flores.jpg',
-    croppedIds: 0
+    croppedIds: 0,
+      primerImagen: 0
   };
 
   componentWillMount() {
@@ -193,11 +194,14 @@ class Demo extends Component {
   }
 
 
-  click = () => {
-      //this.state.publicFiles = []
-      //this.state.workingPicturePath = ''
-      //this.state.croppedImages = {}
-       // this.refs.cropper.move(1);
+  avanzarImagen = () => {
+      let primer = ++this.state.primerImagen
+      this.setState({ primerImagen: primer})
+  }
+
+    retrocederImagen = () => {
+      let primer = --this.state.primerImagen
+        this.setState({ primerImagen: primer })
     }
 
 /*<button className={'btn btn-outline-info btn-sm btn-margin'} disabled={this.state.croppedIds > 0} onClick={this.toggleFrameMode}>
@@ -207,51 +211,72 @@ class Demo extends Component {
   render() {
     return (
         <div id="main-page">
-      <div id="container">
-          <div id={'cropper'}>
-        {this.state.workingPicturePath && (
-          <Cropper
-            ref="cropper"
-            src={this.state.workingPicturePath}
-            style={{ height: 300, width: "100%" }}
-            rotatable
-            guides={false}
-          />
-        )}
-          </div>
-        <hr />
-        <div className={'row horizontal-center'}>
+            <div id="main-container" >
 
-          <button className={'btn btn-outline-info btn-sm btn-margin'} onClick={this.selectPictures}><i className={'la la-cloud-upload'}></i> Mis fotos</button>
-            <button className={'btn btn-outline-info btn-sm btn-margin'} onClick={this.selectBackgrouds}><i className={'la la-image'}></i></button>
-            <button className={'btn btn-outline-info btn-sm btn-margin'} onClick={this.selectEmojis}><i className={'la la-smile-o'}></i></button>
-            <button className={'btn btn-outline-info btn-sm btn-margin'} onClick={this.cropImage}><i className={'la la-cut'}></i></button>
-            <button className={'btn btn-outline-info btn-sm btn-margin'} onClick={this.rotateRight}><i className={ 'la la-rotate-right'}></i></button>
-          <button className={'btn btn-outline-info btn-sm btn-margin'} onClick={this.rotateLeft}><i className={ 'la la-rotate-left'}></i></button>
-            <button className={'btn btn-outline-info btn-sm btn-margin'} onClick={this.refresh}><i className={ 'la la-refresh'}></i></button>
-            <button className={'btn btn-outline-info btn-sm btn-margin'} onClick={this.deleteImg}><i className={ 'la la-trash'}></i> </button>
-            <button className={'btn btn-outline-info btn-sm btn-margin'} disabled={this.state.croppedIds == 0} onClick={this.saveImg}><i className={ 'la la-save'}></i> </button>
-            <button className={'btn btn-outline-info btn-sm btn-margin'} disabled={this.state.images.length == 0} onClick={this.exportToPdf}><i className={'la la-download '}> </i></button>
-        </div>
-        <hr />
 
-        <div id="album-page-container">
-          <div id="album-page-view" style={{heigth: '100%'}}>
-            <AlbumPageContainer
-              frameMode={this.state.frameMode}
-              croppedImages={this.state.croppedImages}
-              handleImageMove={this.handleImageMove}
-              handleImageResize={this.handleImageResize}
-            />
-          </div>
-        </div>
-        <Modal open={this.state.importModal} onClose={this.onCloseModal} center>
-          <ImportModalContent
-            publicFiles={this.state.publicFiles}
-            onImgPick={this.handleImgPick}
-          />
-        </Modal>
-      </div>
+                     <div id="side-pictures-container">
+                         <button className={'btn btn-outline-info btn-sm btn-margin'} disabled={this.state.primerImagen == 0} onClick={this.retrocederImagen}>
+                             <i className="la la-angle-up"></i>
+                         </button>
+
+                             {this.state.images.map((image, i)=> {
+                                 return <img style={{maxWidth: '90%', border: '1px solid #00000021', margin: '5px'}} srcSet={image.dataUrl} alt=""  key={i}/>;
+                             }).filter((_, i) => this.state.primerImagen <= i  && i < this.state.primerImagen +4)}
+
+                             <button style={{position: 'absolute', bottom: '40px',left: '40%'}} className={'btn btn-outline-info btn-sm btn-margin'} disabled={this.state.primerImagen >= this.state.images.length - 4} onClick={this.avanzarImagen}>
+                                 <i className="la la-angle-down"  ></i>
+                             </button>
+
+                     </div>
+
+                        <div id="container">
+                            <div id={'cropper'}>
+                                {this.state.workingPicturePath && (
+                                    <Cropper
+                                        ref="cropper"
+                                        src={this.state.workingPicturePath}
+                                        style={{ height: 300, width: "100%" }}
+                                        rotatable
+                                        guides={false}
+                                    />
+                                )}
+                            </div>
+                            <hr />
+                            <div className={'row horizontal-center'}>
+
+                                <button className={'btn btn-outline-info btn-sm btn-margin'} onClick={this.selectPictures}><i className={'la la-cloud-upload'}></i> Mis fotos</button>
+                                <button className={'btn btn-outline-info btn-sm btn-margin'} onClick={this.selectBackgrouds}><i className={'la la-image'}></i></button>
+                                <button className={'btn btn-outline-info btn-sm btn-margin'} onClick={this.selectEmojis}><i className={'la la-smile-o'}></i></button>
+                                <button className={'btn btn-outline-info btn-sm btn-margin'} onClick={this.cropImage}><i className={'la la-cut'}></i></button>
+                                <button className={'btn btn-outline-info btn-sm btn-margin'} onClick={this.rotateRight}><i className={ 'la la-rotate-right'}></i></button>
+                                <button className={'btn btn-outline-info btn-sm btn-margin'} onClick={this.rotateLeft}><i className={ 'la la-rotate-left'}></i></button>
+                                <button className={'btn btn-outline-info btn-sm btn-margin'} onClick={this.refresh}><i className={ 'la la-refresh'}></i></button>
+                                <button className={'btn btn-outline-info btn-sm btn-margin'} onClick={this.deleteImg}><i className={ 'la la-trash'}></i> </button>
+                                <button className={'btn btn-outline-info btn-sm btn-margin'} disabled={this.state.croppedIds == 0} onClick={this.saveImg}><i className={ 'la la-save'}></i> </button>
+                                <button className={'btn btn-outline-info btn-sm btn-margin'} disabled={this.state.images.length == 0} onClick={this.exportToPdf}><i className={'la la-download '}> </i></button>
+                            </div>
+                            <hr />
+
+                            <div id="album-page-container">
+                                <div id="album-page-view" style={{heigth: '100%'}}>
+                                    <AlbumPageContainer
+                                        frameMode={this.state.frameMode}
+                                        croppedImages={this.state.croppedImages}
+                                        handleImageMove={this.handleImageMove}
+                                        handleImageResize={this.handleImageResize}
+                                    />
+                                </div>
+                            </div>
+                            <Modal open={this.state.importModal} onClose={this.onCloseModal} center>
+                                <ImportModalContent
+                                    publicFiles={this.state.publicFiles}
+                                    onImgPick={this.handleImgPick}
+                                />
+                            </Modal>
+                        </div>
+            </div>
+
+
         </div>
     );
   }

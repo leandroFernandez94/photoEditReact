@@ -16,6 +16,7 @@ class ImportModalContent extends React.Component {
                         onClick={() => this.props.onImgPick(filePath)}
                         style={{maxWidth: "100%"}}
                     />
+
                 </div>
         ))}
           </div>

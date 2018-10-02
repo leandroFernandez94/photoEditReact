@@ -5,8 +5,23 @@
 #container {
     width: 630px;
     padding: 25px;
-    margin: 25px;
+    margin-left: auto;
     border: 1px solid #00000021;
+
+}
+#main-container {
+    width: 800px;
+    border: 1px solid #00000021;
+    display: flex;
+}
+
+#side-pictures-container {
+    position: relative;
+    padding-top: 25px;
+    display: inline-table;
+    text-align: center;
+    height: 100%;
+    width: 100%;
 }
 
 #main-page {
