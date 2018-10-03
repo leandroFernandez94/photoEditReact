@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import Cropper from "react-cropper";
+import { HashRouter } from 'react-router-dom'
 import Modal from "react-responsive-modal";
 import html2canvas from "html2canvas";
 import * as jsPDF from "jspdf";
@@ -283,4 +284,4 @@ class Demo extends Component {
 }
 
 const rootElement = document.getElementById("root");
-ReactDOM.render(<Demo />, rootElement);
+ReactDOM.render(<HashRouter><Demo /></HashRouter>, rootElement);
