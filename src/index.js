@@ -284,4 +284,4 @@ class Demo extends Component {
 }
 
 const rootElement = document.getElementById("root");
-ReactDOM.render(<HashRouter><Demo /></HashRouter>, rootElement);
+ReactDOM.render(<HashRouter path="/home"><Demo /></HashRouter>, rootElement);
