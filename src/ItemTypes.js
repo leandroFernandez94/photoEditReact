@@ -11,3 +11,4 @@ export const LANDSCAPE_HEIGHT = 396;
 export const PORTRAIT_WIDTH = 396;
 export const PORTRAIT_HEIGHT = 561;
 export const A4_SCALE = 2;
+export const MARGEN = 10;

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import Cropper from "react-cropper";
+import { HashRouter } from 'react-router-dom'
 import Modal from "react-responsive-modal";
 import html2canvas from "html2canvas";
 import * as jsPDF from "jspdf";
@@ -9,16 +10,18 @@ import './line-awesome/css/line-awesome.min.css'
 
 import ImportModalContent from "./ImportModalContent";
 import AlbumPageContainer from "./AlbumPageContainer";
+import TextModalContent from './textModalContent'
+
 
 import {getBackgrounds, getEmoticones, getPublicFiles} from "./FilesService";
 import {
-  LANDSCAPE,
-  PORTRAIT,
-  LANDSCAPE_WIDTH,
-  LANDSCAPE_HEIGHT,
-  A4_SCALE,
-  PORTRAIT_WIDTH,
-  PORTRAIT_HEIGHT
+    LANDSCAPE,
+    PORTRAIT,
+    LANDSCAPE_WIDTH,
+    LANDSCAPE_HEIGHT,
+    A4_SCALE,
+    PORTRAIT_WIDTH,
+    PORTRAIT_HEIGHT, MARGEN
 } from "./ItemTypes";
 
 import "cropperjs/dist/cropper.css";
@@ -30,26 +33,49 @@ import {
 
 class Demo extends Component {
   state = {
-    frameMode: PORTRAIT, //or PORTRAIT
+    frameMode: LANDSCAPE, //or PORTRAIT
     publicFiles: [],
     croppedImages: {},
       images: [],
     importModal: false,
+      textModal: false,
     workingPicturePath: 'flores.jpg',
     croppedIds: 0,
-      primerImagen: 0
+      primerImagen: 0,
+      textos: [],
+      texto:{}
   };
 
   componentWillMount() {
     getPublicFiles().then(files => this.setState({ publicFiles: files }));
   }
 
+    agregarTexto = (height, width) => {
+      let texto = this.state.texto
+        texto.width = width
+        texto.height = height
+        texto.top = 50
+        texto.left = 50
+        texto.id= this.state.croppedIds
+        this.setState({croppedIds: ++this.state.croppedIds})
+        this.setState(({ textos }) => (textos.push(texto)))
+        this.setState(prevState => ({ textModal: !prevState.textModal }));
+    }
+
+    saveText = (value, field) => {
+      let t = this.state.texto
+        t[field] = value
+      this.setState({texto: t})
+        console.log(this.state.texto)
+    }
+
+
   cropImage = () => {
     const canvas = this.refs.cropper.getCroppedCanvas();
     const dataUrl = canvas.toDataURL();
     const { width, height } =
       this.state.frameMode === LANDSCAPE
-        ? calculateLandscapeMeazures(canvas.width, canvas.height)
+        ? calculateLandscapeMeazures(canvas.width , canvas.height)
         : calculatePortraitMeazures(canvas.width, canvas.height);
 
     console.log(width, height);
@@ -61,10 +87,11 @@ class Demo extends Component {
           [this.state.croppedIds]: {
             id: this.state.croppedIds,
             path: dataUrl,
-            top: 0,
-            left: 0,
+            top: 10,
+            left: 10,
             width: width,
-            height: height
+            height: height,
+              type: 'img'
           }
         },
         croppedIds: croppedIds + 1
@@ -101,6 +128,22 @@ class Demo extends Component {
     this.setState(prevState => ({ importModal: !prevState.importModal }));
   };
 
+    onOpenModal = () => {
+        this.setState(prevState => ({ importModal: !prevState.importModal }));
+    };
+
+    onCloseModal = () => {
+        this.setState(prevState => ({ importModal: !prevState.importModal }));
+    };
+
+    onOpenModalText = () => {
+        this.setState(prevState => ({ textModal: !prevState.textModal }));
+    };
+
+    onCloseModalText = () => {
+        this.setState(prevState => ({ textModal: !prevState.textModal }));
+    };
+
     selectEmojis = () => {
         getEmoticones().then(files => this.setState({ publicFiles: files }));
         this.onOpenModal()
@@ -116,12 +159,63 @@ class Demo extends Component {
     this.onOpenModal()
   }
 
+
   handleImgPick = imgPath => {
-    this.setState({ workingPicturePath: imgPath }, this.onCloseModal);
-      //document.getElementById("cropper").classList.remove("d-none");
+        let type = (imgPath.includes('fondo'))? 'fondo': (imgPath.includes('emoji'))? 'emoji': null
+        if( type === 'fondo' || type === 'emoji'){
+            var img = new Image();
+            img.setAttribute('crossOrigin', 'anonymous');
+            let cargarImagen = (dataUrl, canvas) => {
+                //const dataUrl = dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+                const { width, height } =
+                    this.state.frameMode === LANDSCAPE
+                        ? calculateLandscapeMeazures(canvas.width, canvas.height)
+                        : calculatePortraitMeazures(canvas.width, canvas.height);
+                this.setState(
+                    ({ croppedImages, croppedIds }) => ({
+                        croppedImages: {
+                            ...croppedImages,
+                            [this.state.croppedIds]: {
+                                id: this.state.croppedIds,
+                                path: dataUrl,
+                                top: (type==='fondo')? 0: MARGEN,
+                                left: (type==='fondo')? 0: MARGEN,
+                                width: width,
+                                height: height,
+                                type: type
+                            }
+                        },
+                        croppedIds: croppedIds + 1
+                    }), this.onCloseModal
+                )
+            }
+            img.onload = function () {
+                var canvas = document.createElement("canvas");
+                canvas.width =this.width;
+                canvas.height =this.height;
+                var ctx = canvas.getContext("2d");
+                ctx.drawImage(this, 0, 0);
+                var dataURL = canvas.toDataURL("image/png");
+
+                cargarImagen(dataURL, canvas)
+            };
+            img.src = imgPath;
+
+        }else{
+            this.setState({ workingPicturePath: imgPath }, this.onCloseModal);
+        }
+
   };
 
   handleImageMove = (key, left, top) => {
+      console.log(key, left, top)
+      let img = this.state.croppedImages[key]
+      let bottom = LANDSCAPE_HEIGHT - (top + img.height)
+      let right = LANDSCAPE_WIDTH - (left + img.width)
+      if(img.type !== 'fondo'){
+          left = (left < MARGEN)? MARGEN : (right < MARGEN)? LANDSCAPE_WIDTH-(img.width +MARGEN) : left
+          top = (top < MARGEN)? MARGEN : (bottom < MARGEN)? LANDSCAPE_HEIGHT-(img.height +MARGEN) : top
+      }
       console.log(key, left, top)
     this.setState(({ croppedImages }) => ({
       croppedImages: {
@@ -135,16 +229,58 @@ class Demo extends Component {
     }));
   };
 
+  handleTextMove = (index, left, top) =>{
+      let textos2 =this.state.textos
+      let bottom = LANDSCAPE_HEIGHT - (top + textos2[index].height)
+      let right = LANDSCAPE_WIDTH - (left + textos2[index].width)
+       textos2[index].left = (left < MARGEN)? MARGEN : (right < MARGEN)? LANDSCAPE_WIDTH-(textos2[index].width +MARGEN) : left
+      textos2[index].top = (top < MARGEN)? MARGEN : (bottom < MARGEN)? LANDSCAPE_HEIGHT-(textos2[index].height +MARGEN) : top
+      this.setState(({textos})=> ({textos2}))
+      console.log(this.state.textos[index])
+  }
+
+    handleTextResize = ({key, width, height, ...position}) => {
+        let textos2 =this.state.textos
+        textos2[key].width = width
+        textos2[key].height = height
+        textos2[key].left = position.x
+        textos2[key].top = position.y
+        this.setState(({textos})=> ({textos2}))
+        console.log(this.state.textos[key])
+    };
+
+
   handleImageResize = ({key, width, height, ...position}) => {
+      let img = this.state.croppedImages[key]
+      let bottom = LANDSCAPE_HEIGHT - (top + img.height)
+      let right = LANDSCAPE_WIDTH - (left + img.width)
+      let left= position.x
+      let top= position.y
+      width = Number(width.split('p')[0])
+      height = Number(height.split('p')[0])
+      if(img.type !== 'fondo'){
+          left = (left < MARGEN)? MARGEN : (right < MARGEN)? LANDSCAPE_WIDTH - (img.width +MARGEN) : left
+          top = (top < MARGEN)? MARGEN : (bottom < MARGEN)? LANDSCAPE_HEIGHT - (img.height +MARGEN) : top
+          let aspect = img.width/ img.height
+          if(width > LANDSCAPE_WIDTH-MARGEN*2){
+              width = LANDSCAPE_WIDTH - MARGEN*2
+              height = width/aspect
+          }
+          if(height > LANDSCAPE_HEIGHT-MARGEN*2){
+              height = LANDSCAPE_HEIGHT - MARGEN*2
+              width = height*aspect
+          }
+      }
+      console.log('ACA',width, height)
     this.setState(({ croppedImages }) => ({
       croppedImages: {
         ...croppedImages,
         [key]: {
           ...croppedImages[key],
-          left: position.x,
-          top: position.y,
-          width,
-          height
+          left: left,
+          top: top,
+          width: width,
+            height: height
         }
       }
     }));
@@ -170,18 +306,36 @@ class Demo extends Component {
 
   deleteImg = () => {
       this.setState({croppedImages: {}, croppedIds: 0})
+      this.setState({textos: []})
       this.setState({workingPicturePath: 'flores.jpg'})
+  }
+
+  reverseImg = () => {
+      let images = this.state.croppedImages
+      let textos = this.state.textos
+      let ultimoId = --this.state.croppedIds
+      delete images[ultimoId.toString()]
+      textos = textos.filter(t => t.id != ultimoId)
+      this.setState({croppedImages: images, textos: textos, croppedIds: Math.max(ultimoId, 0)})
+  }
+
+  deleteOneImg = (i) => {
+      let images2 = this.state.images
+      images2.splice(i,1)
+      this.setState(({images}) => ({images: images2}))
   }
 
   exportToPdf = () => {
       const pdf = new jsPDF({
-          unit: "px",
+          unit: "mm",
+          orientation: 'landscape',
+          format: [200,300]
       });
      // pdf.addPage('a4', this.state.images[0].orientation)
-      pdf.addImage(this.state.images.pop().dataUrl, "JPEG", 0, 0);
+      pdf.addImage(this.state.images.pop().dataUrl, "JPEG", 0, 0, 300, 200);
       this.state.images.forEach( imgData => {
-          pdf.addPage('a4', imgData.orientation)
-          pdf.addImage(imgData.dataUrl, "JPEG", 0, 0);
+          pdf.addPage('mm', [200,300])
+          pdf.addImage(imgData.dataUrl, "JPEG", 0, 0, 300, 200);
       })
       pdf.save("download.pdf");
       this.setState(({images}) => ({images: []}))
@@ -220,16 +374,27 @@ class Demo extends Component {
                          </button>
 
                              {this.state.images.map((image, i)=> {
-                                 return <img style={{maxWidth: '90%', border: '1px solid #00000021', margin: '5px'}} srcSet={image.dataUrl} alt=""  key={i}/>;
-                             }).filter((_, i) => this.state.primerImagen <= i  && i < this.state.primerImagen +4)}
+                                 return <div style={{position: 'relative'}} key={i}>
+                                         <img style={{maxWidth: '90%', border: '1px solid #00000021', margin: '5px'}} srcSet={image.dataUrl} alt=""  />
+                                     <button className={'btn btn-danger btn-sm'} style={{position: 'absolute', top: '8px', right: '11px'}} title="Eliminar imagen" onClick={() => this.deleteOneImg(i)}><i className={'la la-close'}></i> </button>
+                                 </div>;
+                             }).filter((_, i) => this.state.primerImagen <= i  && i < this.state.primerImagen +6)}
 
-                             <button style={{position: 'absolute', bottom: '40px',left: '40%'}} className={'btn btn-outline-info btn-sm btn-margin'} disabled={this.state.primerImagen >= this.state.images.length - 4} onClick={this.avanzarImagen}>
+                             <button style={{position: 'absolute', bottom: '40px',left: '40%'}} className={'btn btn-outline-info btn-sm btn-margin'} disabled={this.state.primerImagen >= this.state.images.length - 6} onClick={this.avanzarImagen}>
                                  <i className="la la-angle-down"  ></i>
                              </button>
 
                      </div>
 
                         <div id="container">
+                            <div className={'row horizontal-center'}>
+
+                                <button className={'btn btn-outline-info btn-sm btn-margin'} onClick={this.selectPictures} title={"Agregar una nueva foto"}><i className={'la la-cloud-upload'}></i> Fotos</button>
+                                <button className={'btn btn-outline-info btn-sm btn-margin'} onClick={this.selectBackgrouds} title={"Agregar un fondo"}><i className={'la la-image'}></i>Fondos</button>
+                                <button className={'btn btn-outline-info btn-sm btn-margin'} onClick={this.selectEmojis} title={"Agregar un emoji"}><i className={'la la-smile-o'}></i>Emojis</button>
+                                <button className={'btn btn-outline-info btn-sm btn-margin'} onClick={this.onOpenModalText} title={"Agregar texto"}><i className={ 'la la-pencil'}></i> Texto</button>
+                            </div>
+                            <hr />
                             <div id={'cropper'}>
                                 {this.state.workingPicturePath && (
                                     <Cropper
@@ -241,36 +406,50 @@ class Demo extends Component {
                                     />
                                 )}
                             </div>
+                            <div style={{textAlign: 'center'}}>
+                                <small style={{color: '#21252996'}}>Realice la seleccion y haga click sobre 'Cortar' para agregar la seleccion a la imagen final</small>
+                            </div>
+
                             <hr />
                             <div className={'row horizontal-center'}>
+                                <button className={'btn btn-outline-info btn-sm btn-margin'} onClick={this.cropImage} title={"Cortar seleccion"}><i className={'la la-cut'}></i>Cortar</button>
+                                <button className={'btn btn-outline-info btn-sm btn-margin'} onClick={this.rotateRight} title={"Rotar a la derecha"}><i className={ 'la la-rotate-right'}></i>Rotar der.</button>
+                                <button className={'btn btn-outline-info btn-sm btn-margin'} onClick={this.rotateLeft} title={"Rotar a la izquierda"}><i className={ 'la la-rotate-left'}></i>Rotar izq.</button>
+                                <button className={'btn btn-outline-info btn-sm btn-margin'} onClick={this.reverseImg} title={"Borrar ultima imagen agregada"}><i className={'la la-refresh'}></i>Revertir cambios</button>
 
-                                <button className={'btn btn-outline-info btn-sm btn-margin'} onClick={this.selectPictures}><i className={'la la-cloud-upload'}></i> Mis fotos</button>
-                                <button className={'btn btn-outline-info btn-sm btn-margin'} onClick={this.selectBackgrouds}><i className={'la la-image'}></i></button>
-                                <button className={'btn btn-outline-info btn-sm btn-margin'} onClick={this.selectEmojis}><i className={'la la-smile-o'}></i></button>
-                                <button className={'btn btn-outline-info btn-sm btn-margin'} onClick={this.cropImage}><i className={'la la-cut'}></i></button>
-                                <button className={'btn btn-outline-info btn-sm btn-margin'} onClick={this.rotateRight}><i className={ 'la la-rotate-right'}></i></button>
-                                <button className={'btn btn-outline-info btn-sm btn-margin'} onClick={this.rotateLeft}><i className={ 'la la-rotate-left'}></i></button>
-                                <button className={'btn btn-outline-info btn-sm btn-margin'} onClick={this.refresh}><i className={ 'la la-refresh'}></i></button>
-                                <button className={'btn btn-outline-info btn-sm btn-margin'} onClick={this.deleteImg}><i className={ 'la la-trash'}></i> </button>
-                                <button className={'btn btn-outline-info btn-sm btn-margin'} disabled={this.state.croppedIds == 0} onClick={this.saveImg}><i className={ 'la la-save'}></i> </button>
-                                <button className={'btn btn-outline-info btn-sm btn-margin'} disabled={this.state.images.length == 0} onClick={this.exportToPdf}><i className={'la la-download '}> </i></button>
+                                <button className={'btn btn-outline-info btn-sm btn-margin'} disabled={this.state.croppedIds == 0} onClick={this.saveImg} title={"Guardar imagen y pasar a la siguiente hoja"}><i className={ 'la la-save'}></i> Guardar</button>
+                                <button className={'btn btn-outline-info btn-sm btn-margin'} disabled={this.state.images.length == 0} onClick={this.exportToPdf} title={"Exportar imagenes como pdf"}><i className={'la la-download '}> </i>Exportar</button>
                             </div>
                             <hr />
 
                             <div id="album-page-container">
+
                                 <div id="album-page-view" style={{heigth: '100%'}}>
+                                    <div id="album-page-separator">
+                                    </div>
                                     <AlbumPageContainer
                                         frameMode={this.state.frameMode}
                                         croppedImages={this.state.croppedImages}
+                                        textos={this.state.textos}
                                         handleImageMove={this.handleImageMove}
+                                        handleTextMove={this.handleTextMove}
                                         handleImageResize={this.handleImageResize}
+                                        handleTextResize={this.handleTextResize}
                                     />
+
                                 </div>
                             </div>
                             <Modal open={this.state.importModal} onClose={this.onCloseModal} center>
                                 <ImportModalContent
                                     publicFiles={this.state.publicFiles}
                                     onImgPick={this.handleImgPick}
+                                />
+                            </Modal>
+                            <Modal open={this.state.textModal} onClose={this.onCloseModalText} center>
+                                <TextModalContent
+                                    texto={this.state.texto}
+                                    saveText={this.saveText}
+                                    agregarTexto={this.agregarTexto}
                                 />
                             </Modal>
                         </div>
@@ -280,7 +459,9 @@ class Demo extends Component {
         </div>
     );
   }
+
+
 }
 
 const rootElement = document.getElementById("root");
-ReactDOM.render(<Demo />, rootElement);
+ReactDOM.render(<HashRouter path="/home"><Demo /></HashRouter>, rootElement);

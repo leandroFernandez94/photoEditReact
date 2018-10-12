@@ -2,7 +2,10 @@ import React from "react";
 import { Rnd } from "react-rnd";
 
 export default class AlbumPageContainer extends React.Component {
+
+
   renderCropped = key => {
+
     const cropped = this.props.croppedImages[key];
     const size = {
       width: cropped.width,
@@ -42,12 +45,44 @@ export default class AlbumPageContainer extends React.Component {
     );
   };
 
+    renderInput = (texto, key) => {
+
+        const size = {
+            width: texto.width,
+            height: texto.height
+        };
+        const position = {
+            x: texto.left,
+            y: texto.top
+        };
+
+        return (
+            <Rnd
+                key={key}
+                lockAspectRatio
+                bounds="parent"
+                size={size}
+                position={position}
+                onDragStop={(e, d) => {
+                    this.props.handleTextMove(key, d.x, d.y);
+                }}
+            >
+                <p className={texto.font} style={{ fontSize: texto.size, color: texto.color}}> {texto.texto}</p>
+
+            </Rnd>
+        );
+    };
+
   render() {
     const { croppedImages } = this.props;
     return (
-      <div id="album-page-frame" className={this.props.frameMode}>
-        {Object.keys(croppedImages).map(this.renderCropped)}
-      </div>
+
+            <div id="album-page-frame" className={this.props.frameMode}>
+                    {Object.keys(croppedImages).map(this.renderCropped)}
+                    {this.props.textos.map((texto, indice) => this.renderInput(texto, indice))}
+            </div>
+
+
     );
   }
 }

@@ -1,9 +1,52 @@
+@import url('https://fonts.googleapis.com/css?family=Abril+Fatface|Amatic+SC|Charmonman|Fredoka+One|Great+Vibes|Lato|Monoton|Old+Standard+TT|Oleo+Script+Swash+Caps|PT+Mono|Roboto|Shadows+Into+Light+Two|Tangerine');
+
+.Roboto {
+    font-family: 'Roboto', sans-serif
+}
+.Lato {
+    font-family: 'Lato', sans-serif
+}
+.Shadows {
+    font-family: 'Shadows Into Light Two', cursive;
+}
+.OldStandardTT {
+    font-family: 'Old Standard TT', serif;
+}
+.AbrilFatface {
+    font-family: 'Abril Fatface', cursive;
+}
+.OleoScript {
+    font-family: 'Oleo Script Swash Caps', cursive;
+}
+.PTMono {
+    font-family: 'PT Mono', monospace;
+}
+.Charmonman {
+    font-family: 'Charmonman', cursive;
+}
+.GreatVibes {
+    font-family: 'Great Vibes', cursive;
+}
+.AmaticSC{
+    font-family: 'Amatic SC', cursive;
+}
+.Tangerine{
+    font-family: 'Tangerine', cursive;
+}
+.Fredoka{
+    font-family: 'Fredoka One', cursive;
+}
+.Monoton{
+    font-family: 'Monoton', cursive;
+}
+
+
 #album-page-container {
   display: flex;
   justify-content: center;
 }
 #container {
-    width: 630px;
+    width: 640px;
     padding: 25px;
     margin-left: auto;
     border: 1px solid #00000021;
@@ -34,15 +77,25 @@
 
 #album-page-view {
   border: 10px solid black;
+    height: 416px;
+    width: 581px;
+    position: relative;
 }
 
 /*#album-page-frame.landscape {
   height: 595.28px;
   width: 841.89px;
 }*/
+#album-page-separator{
+    width: 50%;
+    height: 100%;
+    border-right: 2px dashed #00000026;
+    position: absolute
+}
 #album-page-frame.landscape {
-    height: 396px;
-    width: 561px;
+    height: 100%;
+    width: 100%;
+    position: absolute;
 }
 
 #album-page-frame.portrait {
