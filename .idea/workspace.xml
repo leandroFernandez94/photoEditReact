@@ -4,14 +4,24 @@
     <list default="true" id="c451f799-91b9-4a6b-8077-74847c4b6cd2" name="Default Changelist" comment="">
       <change afterPath="$PROJECT_DIR$/src/textModalContent.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/build/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ARHelpers.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/ARHelpers.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/AlbumPageContainer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AlbumPageContainer.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ItemTypes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/ItemTypes.js" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/build/asset-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/build/asset-manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/service-worker.js" beforeDir="false" afterPath="$PROJECT_DIR$/build/service-worker.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/css/main.12c06acd.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/css/main.12c06acd.css.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/js/main.b3080548.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/js/main.b3080548.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+>>>>>>> 223ecd03399e3bf573910ee646fc2e12848610b0
       <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles.css" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -26,13 +36,21 @@
     <session id="-1656935139">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
+<<<<<<< HEAD
           <entry key="project.closed" value="15" />
           <entry key="project.open.time.1" value="2" />
+=======
+          <entry key="project.closed" value="11" />
+          <entry key="project.open.time.1" value="1" />
+>>>>>>> 223ecd03399e3bf573910ee646fc2e12848610b0
           <entry key="project.open.time.11" value="2" />
           <entry key="project.open.time.12" value="1" />
           <entry key="project.open.time.14" value="1" />
           <entry key="project.open.time.16" value="1" />
+<<<<<<< HEAD
           <entry key="project.open.time.2" value="1" />
+=======
+>>>>>>> 223ecd03399e3bf573910ee646fc2e12848610b0
           <entry key="project.open.time.3" value="2" />
           <entry key="project.open.time.35" value="1" />
           <entry key="project.open.time.41" value="1" />
@@ -40,14 +58,24 @@
           <entry key="project.open.time.6" value="1" />
           <entry key="project.open.time.83" value="1" />
           <entry key="project.open.time.9" value="1" />
+<<<<<<< HEAD
           <entry key="project.opened" value="16" />
+=======
+          <entry key="project.opened" value="12" />
+>>>>>>> 223ecd03399e3bf573910ee646fc2e12848610b0
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
+<<<<<<< HEAD
           <entry key="css" value="4" />
           <entry key="html" value="4" />
           <entry key="js" value="24" />
+=======
+          <entry key="css" value="3" />
+          <entry key="html" value="3" />
+          <entry key="js" value="14" />
+>>>>>>> 223ecd03399e3bf573910ee646fc2e12848610b0
           <entry key="json" value="1" />
           <entry key="png" value="2" />
           <entry key="ts" value="3" />
@@ -55,20 +83,34 @@
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
+<<<<<<< HEAD
           <entry key="CSS" value="4" />
           <entry key="HTML" value="4" />
           <entry key="Image" value="2" />
           <entry key="JSON" value="1" />
           <entry key="JavaScript" value="23" />
+=======
+          <entry key="CSS" value="3" />
+          <entry key="HTML" value="3" />
+          <entry key="Image" value="2" />
+          <entry key="JSON" value="1" />
+          <entry key="JavaScript" value="13" />
+>>>>>>> 223ecd03399e3bf573910ee646fc2e12848610b0
           <entry key="Scratch" value="1" />
           <entry key="TypeScript" value="3" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
+<<<<<<< HEAD
           <entry key="css" value="589" />
           <entry key="html" value="51" />
           <entry key="js" value="11566" />
+=======
+          <entry key="css" value="292" />
+          <entry key="html" value="24" />
+          <entry key="js" value="5269" />
+>>>>>>> 223ecd03399e3bf573910ee646fc2e12848610b0
           <entry key="json" value="12" />
         </counts>
       </usages-collector>
@@ -77,7 +119,11 @@
           <entry key="CSS" value="589" />
           <entry key="HTML" value="51" />
           <entry key="JSON" value="12" />
+<<<<<<< HEAD
           <entry key="JavaScript" value="11566" />
+=======
+          <entry key="JavaScript" value="5269" />
+>>>>>>> 223ecd03399e3bf573910ee646fc2e12848610b0
         </counts>
       </usages-collector>
       <usages-collector id="statistics.js.language.service.starts">
@@ -86,14 +132,44 @@
         </counts>
       </usages-collector>
     </session>
+    <session id="-43330758">
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="js" value="1" />
+          <entry key="json" value="34" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="JSON" value="34" />
+          <entry key="JavaScript" value="1" />
+        </counts>
+      </usages-collector>
+    </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
+<<<<<<< HEAD
         <entry file="file://$PROJECT_DIR$/src/index.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="167">
               <caret line="188" column="28" selection-start-line="188" selection-start-column="28" selection-end-line="188" selection-end-column="28" />
+=======
+        <entry file="file://$PROJECT_DIR$/src/ImportModalContent.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="494">
+              <caret line="19" column="22" selection-start-line="19" selection-start-column="22" selection-end-line="19" selection-end-column="22" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/index.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-6293">
+              <caret line="31" column="6" selection-start-line="31" selection-start-column="6" selection-end-line="31" selection-end-column="6" />
+>>>>>>> 223ecd03399e3bf573910ee646fc2e12848610b0
               <folding>
                 <element signature="e#0#41#0" expanded="true" />
               </folding>
@@ -125,8 +201,22 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ItemTypes.js">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
             <state relative-caret-position="104">
               <caret line="4" column="39" selection-start-line="4" selection-start-column="39" selection-end-line="4" selection-end-column="39" />
+=======
+            <state relative-caret-position="208">
+              <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/package.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="156">
+              <caret line="6" column="16" selection-start-line="6" selection-start-column="16" selection-end-line="6" selection-end-column="16" />
+>>>>>>> 223ecd03399e3bf573910ee646fc2e12848610b0
             </state>
           </provider>
         </entry>
@@ -197,7 +287,11 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/public/index.html" />
+<<<<<<< HEAD
         <option value="$PROJECT_DIR$/package.json" />
+=======
+        <option value="$PROJECT_DIR$/src/AlbumPageContainer.js" />
+>>>>>>> 223ecd03399e3bf573910ee646fc2e12848610b0
         <option value="$PROJECT_DIR$/src/FilesService.js" />
         <option value="$PROJECT_DIR$/src/ImportModalContent.js" />
         <option value="$PROJECT_DIR$/build/index.html" />
@@ -207,6 +301,7 @@
         <option value="$PROJECT_DIR$/src/AlbumPageContainer.js" />
         <option value="$PROJECT_DIR$/src/styles.css" />
         <option value="$PROJECT_DIR$/src/index.js" />
+        <option value="$PROJECT_DIR$/package.json" />
       </list>
     </option>
   </component>
@@ -227,9 +322,15 @@
     </packageJsonPaths>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
+<<<<<<< HEAD
     <option name="y" value="25" />
     <option name="width" value="1920" />
     <option name="height" value="1055" />
+=======
+    <option name="y" value="27" />
+    <option name="width" value="899" />
+    <option name="height" value="1053" />
+>>>>>>> 223ecd03399e3bf573910ee646fc2e12848610b0
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -303,21 +404,35 @@
       <workItem from="1538178955876" duration="6506000" />
       <workItem from="1538247818430" duration="612000" />
       <workItem from="1538502475466" duration="2545000" />
+<<<<<<< HEAD
       <workItem from="1538601313323" duration="1907000" />
       <workItem from="1539106015501" duration="23406000" />
       <workItem from="1539194482705" duration="4217000" />
       <workItem from="1539267563208" duration="5116000" />
       <workItem from="1539279398325" duration="14154000" />
+=======
+      <workItem from="1538601313323" duration="1380000" />
+>>>>>>> 223ecd03399e3bf573910ee646fc2e12848610b0
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
+<<<<<<< HEAD
     <option name="totallyTimeSpent" value="100725000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="25" width="1920" height="1055" extended-state="6" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.15761729" />
+=======
+    <option name="totallyTimeSpent" value="53867000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="0" y="25" width="1920" height="1055" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.32841328" />
+>>>>>>> 223ecd03399e3bf573910ee646fc2e12848610b0
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -331,7 +446,11 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
+<<<<<<< HEAD
       <window_info anchor="bottom" id="Terminal" order="10" visible="true" weight="0.3488624" />
+=======
+      <window_info active="true" anchor="bottom" id="Terminal" order="10" visible="true" weight="0.3488624" />
+>>>>>>> 223ecd03399e3bf573910ee646fc2e12848610b0
       <window_info anchor="bottom" id="TypeScript" order="11" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -352,6 +471,7 @@
     <entry file="file://$PROJECT_DIR$/src/line-awesome.min.css" />
     <entry file="file://$PROJECT_DIR$/public/emojis/Smiling_With_Sweat_Emoji_2.png">
       <provider selected="true" editor-type-id="images" />
+<<<<<<< HEAD
     </entry>
     <entry file="file://$PROJECT_DIR$/public/emojis/1.png">
       <provider selected="true" editor-type-id="images" />
@@ -381,6 +501,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/build/static/js/main.b3080548.js">
       <provider selected="true" editor-type-id="text-editor" />
+=======
+>>>>>>> 223ecd03399e3bf573910ee646fc2e12848610b0
     </entry>
     <entry file="file://$PROJECT_DIR$/node_modules/react-rnd/lib/index.d.ts">
       <provider selected="true" editor-type-id="text-editor">
@@ -403,6 +525,7 @@
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/src/jscolor.js" />
     <entry file="file://$PROJECT_DIR$/build/index.html">
       <provider selected="true" editor-type-id="text-editor">
@@ -422,6 +545,19 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ImportModalContent.js">
+=======
+    <entry file="file://$PROJECT_DIR$/src/ImportModalContent.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="494">
+          <caret line="19" column="22" selection-start-line="19" selection-start-column="22" selection-end-line="19" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/react-responsive-modal/types/index.d.ts">
+>>>>>>> 223ecd03399e3bf573910ee646fc2e12848610b0
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="390">
           <caret line="15" column="69" selection-start-line="15" selection-start-column="33" selection-end-line="15" selection-end-column="69" />
@@ -440,10 +576,17 @@
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/src/ItemTypes.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="104">
           <caret line="4" column="39" selection-start-line="4" selection-start-column="39" selection-end-line="4" selection-end-column="39" />
+=======
+    <entry file="file://$PROJECT_DIR$/src/styles.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="468">
+          <caret line="18" column="10" selection-start-line="18" selection-start-column="10" selection-end-line="18" selection-end-column="10" />
+>>>>>>> 223ecd03399e3bf573910ee646fc2e12848610b0
         </state>
       </provider>
     </entry>
@@ -454,30 +597,62 @@
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/src/AlbumPageContainer.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
           <caret line="78" selection-start-line="78" selection-end-line="78" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
+=======
+    <entry file="file://$PROJECT_DIR$/src/ARHelpers.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1482">
+          <caret line="62" column="35" selection-start-line="62" selection-start-column="35" selection-end-line="62" selection-end-column="35" />
+          <folding>
+            <element signature="e#0#105#0" expanded="true" />
+>>>>>>> 223ecd03399e3bf573910ee646fc2e12848610b0
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/styles.css">
+    <entry file="file://$PROJECT_DIR$/build/static/js/main.b3080548.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build/index.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/index.html">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state relative-caret-position="167">
           <caret line="48" column="13" selection-start-line="48" selection-start-column="13" selection-end-line="48" selection-end-column="13" />
+=======
+        <state relative-caret-position="520">
+          <caret line="26" column="12" selection-start-line="26" selection-start-column="12" selection-end-line="26" selection-end-column="12" />
+>>>>>>> 223ecd03399e3bf573910ee646fc2e12848610b0
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/index.js">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state relative-caret-position="167">
           <caret line="188" column="28" selection-start-line="188" selection-start-column="28" selection-end-line="188" selection-end-column="28" />
+=======
+        <state relative-caret-position="-6293">
+          <caret line="31" column="6" selection-start-line="31" selection-start-column="6" selection-end-line="31" selection-end-column="6" />
+>>>>>>> 223ecd03399e3bf573910ee646fc2e12848610b0
           <folding>
             <element signature="e#0#41#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="156">
+          <caret line="6" column="16" selection-start-line="6" selection-start-column="16" selection-end-line="6" selection-end-column="16" />
         </state>
       </provider>
     </entry>
