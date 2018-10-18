@@ -50,7 +50,8 @@ class Demo extends Component {
     getPublicFiles().then(files => this.setState({ publicFiles: files }));
   }
 
-    agregarTexto = (height, width) => {
+    agregarTexto = (height, width, coso) => {
+      console.log('ACA', coso)
       console.log('textos', this.state.textos)
         console.log('texto', this.state.texto)
         let texto = {}
