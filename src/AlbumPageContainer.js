@@ -66,6 +66,14 @@ export default class AlbumPageContainer extends React.Component {
                 onDragStop={(e, d) => {
                     this.props.handleTextMove(key, d.x, d.y);
                 }}
+                onResize={(e, direction, ref, delta, position) => {
+                    this.props.handleTextResize({
+                        key,
+                        width: ref.style.width,
+                        height: ref.style.height,
+                        ...position
+                    });
+                }}
             >
                 <p className={texto.font} style={{ fontSize: texto.size, color: texto.color}}> {texto.texto}</p>
 

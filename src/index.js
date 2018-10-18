@@ -51,14 +51,23 @@ class Demo extends Component {
   }
 
     agregarTexto = (height, width) => {
-      let texto = this.state.texto
+      console.log('textos', this.state.textos)
+        console.log('texto', this.state.texto)
+        let texto = {}
+        texto.texto = this.state.texto.texto
+        texto.size = this.state.texto.size
+        texto.font = this.state.texto.font
+        texto.color = this.state.texto.color
         texto.width = width
         texto.height = height
         texto.top = 50
         texto.left = 50
         texto.id= this.state.croppedIds
         this.setState({croppedIds: ++this.state.croppedIds})
-        this.setState(({ textos }) => (textos.push(texto)))
+        this.setState(prevState => ({
+            textos: [...prevState.textos, texto]
+        }))
+        console.log(this.state.textos)
         this.setState(prevState => ({ textModal: !prevState.textModal }));
     }
 
@@ -113,11 +122,11 @@ class Demo extends Component {
   };
 
   rotateLeft = () => {
-    this.refs.cropper.rotate(-90);
+    this.refs.cropper.rotate(-15);
   };
 
   rotateRight = () => {
-    this.refs.cropper.rotate(90);
+    this.refs.cropper.rotate(15);
   };
 
   onOpenModal = () => {
@@ -416,7 +425,6 @@ class Demo extends Component {
                                 <button className={'btn btn-outline-info btn-sm btn-margin'} onClick={this.rotateRight} title={"Rotar a la derecha"}><i className={ 'la la-rotate-right'}></i>Rotar der.</button>
                                 <button className={'btn btn-outline-info btn-sm btn-margin'} onClick={this.rotateLeft} title={"Rotar a la izquierda"}><i className={ 'la la-rotate-left'}></i>Rotar izq.</button>
                                 <button className={'btn btn-outline-info btn-sm btn-margin'} onClick={this.reverseImg} title={"Borrar ultima imagen agregada"}><i className={'la la-refresh'}></i>Revertir cambios</button>
-
                                 <button className={'btn btn-outline-info btn-sm btn-margin'} disabled={this.state.croppedIds == 0} onClick={this.saveImg} title={"Guardar imagen y pasar a la siguiente hoja"}><i className={ 'la la-save'}></i> Guardar</button>
                                 <button className={'btn btn-outline-info btn-sm btn-margin'} disabled={this.state.images.length == 0} onClick={this.exportToPdf} title={"Exportar imagenes como pdf"}><i className={'la la-download '}> </i>Exportar</button>
                             </div>
@@ -425,8 +433,17 @@ class Demo extends Component {
                             <div id="album-page-container">
 
                                 <div id="album-page-view" style={{heigth: '100%'}}>
-                                    <div id="album-page-separator">
+
+                                    <div id="album-page-separator" className={ this.state.images.length > 0 ? '' : 'hidden'}>
                                     </div>
+                                        <div id="front-back-separator-right" className={ this.state.images.length <= 0 ? '' : 'hidden' }>
+                                            <p>Tapa</p>
+                                        </div>
+                                        <div id="front-back-separator-left" className={ this.state.images.length <= 0 ? '' : 'hidden'}>
+                                            <p>Contratapa</p>
+                                        </div>
+
+
                                     <AlbumPageContainer
                                         frameMode={this.state.frameMode}
                                         croppedImages={this.state.croppedImages}
@@ -459,6 +476,7 @@ class Demo extends Component {
         </div>
     );
   }
+
 
 
 }

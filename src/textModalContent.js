@@ -22,7 +22,7 @@ class TextModalContent extends React.Component {
                             </div>
                             <div className="form-group">
                                 <label >Tamaño de letra:</label>
-                                <input type="number" className="form-control" max="50" onChange={evt => this.props.saveText(evt.target.value +'px', 'size')} placeholder="12"/>
+                                <input type="number" className="form-control" onChange={evt => {evt.target.value = Math.min(evt.target.value, 50); this.props.saveText(evt.target.value +'px', 'size')}} placeholder="12"/>
                             </div>
                             <div className="form-group">
                                 <label htmlFor="exampleSelect1">Tipografia:</label>

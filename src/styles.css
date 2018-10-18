@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Abril+Fatface|Amatic+SC|Charmonman|Fredoka+One|Great+Vibes|Lato|Monoton|Old+Standard+TT|Oleo+Script+Swash+Caps|PT+Mono|Roboto|Shadows+Into+Light+Two|Tangerine');
 
+.hidden { display:none !important; }
+
 .Roboto {
     font-family: 'Roboto', sans-serif
 }
@@ -91,6 +93,31 @@
     height: 100%;
     border-right: 2px dashed #00000026;
     position: absolute
+}
+#front-back-separator-right{
+    left: 55%;
+    width: 45%;
+    height: 100%;
+    border-left: 2px dashed #00000026;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#front-back-separator-right > p, #front-back-separator-left > p{
+    color: #0000004f
+}
+
+#front-back-separator-left{
+
+    width: 45%;
+    height: 100%;
+    border-right: 2px dashed #00000026;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 #album-page-frame.landscape {
     height: 100%;
