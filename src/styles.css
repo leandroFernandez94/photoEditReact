@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Abril+Fatface|Amatic+SC|Charmonman|Fredoka+One|Great+Vibes|Lato|Monoton|Old+Standard+TT|Oleo+Script+Swash+Caps|PT+Mono|Roboto|Shadows+Into+Light+Two|Tangerine');
+@import url('https://fonts.googleapis.com/css?family=Abril+Fatface|Amatic+SC|Charmonman|Fredoka+One|Great+Vibes|Lato|Monoton|Old+Standard+TT|Oleo+Script+Swash+Caps|PT+Mono|Roboto|Shadows+Into+Light+Two|Tangerine|Raleway');
 
 .hidden { display:none !important; }
 
@@ -41,7 +41,13 @@
 .Monoton{
     font-family: 'Monoton', cursive;
 }
+.Raleway{
+    font-family: 'Raleway', sans-serif;
+}
 
+hr{
+   height: 1px;
+}
 
 #album-page-container {
   display: flex;

@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
-import Cropper from "react-cropper";
 import { HashRouter } from 'react-router-dom'
 import Modal from "react-responsive-modal";
 import html2canvas from "html2canvas";
@@ -9,6 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './line-awesome/css/line-awesome.min.css'
 
 import ImportModalContent from "./ImportModalContent";
+import CropperModalContent from './CropperModal'
 import AlbumPageContainer from "./AlbumPageContainer";
 import TextModalContent from './textModalContent'
 
@@ -39,6 +39,7 @@ class Demo extends Component {
       images: [],
     importModal: false,
       textModal: false,
+      cropperModal: false,
     workingPicturePath: 'flores.jpg',
     croppedIds: 0,
       primerImagen: 0,
@@ -79,35 +80,7 @@ class Demo extends Component {
     }
 
 
-  cropImage = () => {
-    const canvas = this.refs.cropper.getCroppedCanvas();
-    const dataUrl = canvas.toDataURL();
-    const { width, height } =
-      this.state.frameMode === LANDSCAPE
-        ? calculateLandscapeMeazures(canvas.width , canvas.height)
-        : calculatePortraitMeazures(canvas.width, canvas.height);
-
-    console.log(width, height);
-    this.setState(
-      ({ croppedImages, croppedIds }) => ({
-        //croppedImages: [...croppedImages, dataUrl]
-        croppedImages: {
-          ...croppedImages,
-          [this.state.croppedIds]: {
-            id: this.state.croppedIds,
-            path: dataUrl,
-            top: 10,
-            left: 10,
-            width: width,
-            height: height,
-              type: 'img'
-          }
-        },
-        croppedIds: croppedIds + 1
-      }),
-      () => console.log(this.state)
-    );
-  };
+  
 
   toggleFrameMode = () => {
 
@@ -121,21 +94,56 @@ class Demo extends Component {
 
   };
 
-  rotateLeft = () => {
-    this.refs.cropper.rotate(-15);
-  };
+  cropImage = (canvas) => {
+      const dataUrl = canvas.toDataURL();
+      const {
+          width,
+          height
+      } =
+      this.state.frameMode === LANDSCAPE ?
+          calculateLandscapeMeazures(canvas.width, canvas.height) :
+          calculatePortraitMeazures(canvas.width, canvas.height);
 
-  rotateRight = () => {
-    this.refs.cropper.rotate(15);
+      console.log(width, height);
+      this.setState(
+          ({
+              croppedImages,
+              croppedIds
+          }) => ({
+              //croppedImages: [...croppedImages, dataUrl]
+              croppedImages: {
+                  ...croppedImages,
+                  [this.state.croppedIds]: {
+                      id: this.state.croppedIds,
+                      path: dataUrl,
+                      top: 10,
+                      left: 10,
+                      width: width,
+                      height: height,
+                      type: 'img'
+                  }
+              },
+              croppedIds: croppedIds + 1
+          }),
+          () => console.log(this.state)
+      );
+      this.onCloseModalCropper()
   };
 
   onOpenModal = () => {
     this.setState(prevState => ({ importModal: !prevState.importModal }));
   };
 
-  onCloseModal = () => {
-    this.setState(prevState => ({ importModal: !prevState.importModal }));
+  onOpenModalCropper = () => {
+      this.setState(prevState => ({
+          cropperModal: !prevState.cropperModal
+      }));
   };
+   onCloseModalCropper = () => {
+       this.setState(prevState => ({
+           cropperModal: !prevState.cropperModal
+       }));
+   };
 
     onOpenModal = () => {
         this.setState(prevState => ({ importModal: !prevState.importModal }));
@@ -143,6 +151,12 @@ class Demo extends Component {
 
     onCloseModal = () => {
         this.setState(prevState => ({ importModal: !prevState.importModal }));
+        if (!this.state.publicFiles[0].includes('fondos') && !this.state.publicFiles[0].includes('emojis')){
+            this.setState(prevState => ({
+                cropperModal: !prevState.cropperModal
+            }));
+        }
+        
     };
 
     onOpenModalText = () => {
@@ -396,6 +410,12 @@ class Demo extends Component {
                      </div>
 
                         <div id="container">
+                        <hr/>
+
+                            <div style = {{textAlign: 'center'}} >
+                             < h5 className={"Raleway"} style={{color: '#4da6c7'}}> Agregar imagen</h5>
+                             </div>
+
                             <div className={'row horizontal-center'}>
 
                                 <button className={'btn btn-outline-info btn-sm btn-margin'} onClick={this.selectPictures} title={"Agregar una nueva foto"}><i className={'la la-cloud-upload'}></i> Fotos</button>
@@ -403,32 +423,9 @@ class Demo extends Component {
                                 <button className={'btn btn-outline-info btn-sm btn-margin'} onClick={this.selectEmojis} title={"Agregar un emoji"}><i className={'la la-smile-o'}></i>Emojis</button>
                                 <button className={'btn btn-outline-info btn-sm btn-margin'} onClick={this.onOpenModalText} title={"Agregar texto"}><i className={ 'la la-pencil'}></i> Texto</button>
                             </div>
-                            <hr />
-                            <div id={'cropper'}>
-                                {this.state.workingPicturePath && (
-                                    <Cropper
-                                        ref="cropper"
-                                        src={this.state.workingPicturePath}
-                                        style={{ height: 300, width: "100%" }}
-                                        rotatable
-                                        guides={false}
-                                    />
-                                )}
-                            </div>
-                            <div style={{textAlign: 'center'}}>
-                                <small style={{color: '#21252996'}}>Realice la seleccion y haga click sobre 'Cortar' para agregar la seleccion a la imagen final</small>
-                            </div>
+                        <hr />
 
-                            <hr />
-                            <div className={'row horizontal-center'}>
-                                <button className={'btn btn-outline-info btn-sm btn-margin'} onClick={this.cropImage} title={"Cortar seleccion"}><i className={'la la-cut'}></i>Cortar</button>
-                                <button className={'btn btn-outline-info btn-sm btn-margin'} onClick={this.rotateRight} title={"Rotar a la derecha"}><i className={ 'la la-rotate-right'}></i>Rotar der.</button>
-                                <button className={'btn btn-outline-info btn-sm btn-margin'} onClick={this.rotateLeft} title={"Rotar a la izquierda"}><i className={ 'la la-rotate-left'}></i>Rotar izq.</button>
-                                <button className={'btn btn-outline-info btn-sm btn-margin'} onClick={this.reverseImg} title={"Borrar ultima imagen agregada"}><i className={'la la-refresh'}></i>Revertir cambios</button>
-                                <button className={'btn btn-outline-info btn-sm btn-margin'} disabled={this.state.croppedIds == 0} onClick={this.saveImg} title={"Guardar imagen y pasar a la siguiente hoja"}><i className={ 'la la-save'}></i> Guardar</button>
-                                <button className={'btn btn-outline-info btn-sm btn-margin'} disabled={this.state.images.length == 0} onClick={this.exportToPdf} title={"Exportar imagenes como pdf"}><i className={'la la-download '}> </i>Exportar</button>
-                            </div>
-                            <hr />
+                            
 
                             <div id="album-page-container">
 
@@ -456,6 +453,33 @@ class Demo extends Component {
 
                                 </div>
                             </div>
+                            <hr/>
+                                <div className = {'row horizontal-center'} >
+                                <button className = {'btn btn-outline-info btn-sm btn-margin'}
+                                    onClick = {this.reverseImg}
+                                    title = {"Borrar ultima imagen agregada"} > 
+                                    < i className = {'la la-refresh'} > </i>Revertir cambios
+                                </button >
+                                <button className = {'btn btn-outline-info btn-sm btn-margin' }
+                                    disabled = {this.state.croppedIds == 0}
+                                    onClick = {this.saveImg}
+                                    title = {"Guardar imagen y pasar a la siguiente hoja" } > 
+                                    < i className = {'la la-save'} > </i> Guardar pagina
+                                </button >
+                                <button className = {'btn btn-outline-info btn-sm btn-margin'}
+                                    disabled = {this.state.images.length == 0}
+                                    onClick = {this.exportToPdf}
+                                    title = {"Exportar imagenes como pdf"} > 
+                                    < i className = {'la la-download '} > </i>Exportar libro
+                                </button >
+                                </div> 
+                                <hr/>
+                            <Modal open={this.state.cropperModal} onClose={this.onCloseModalCropper} center>
+                                <CropperModalContent
+                                    cropImage={this.cropImage}
+                                    state={this.state}
+                                />
+                            </Modal>
                             <Modal open={this.state.importModal} onClose={this.onCloseModal} center>
                                 <ImportModalContent
                                     publicFiles={this.state.publicFiles}
