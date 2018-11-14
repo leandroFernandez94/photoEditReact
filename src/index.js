@@ -152,11 +152,6 @@ class Demo extends Component {
 
     onCloseModal = () => {
         this.setState(prevState => ({ importModal: !prevState.importModal }));
-        if (!this.state.publicFiles[0].includes('fondos') && !this.state.publicFiles[0].includes('emojis')){
-            this.setState(prevState => ({
-                cropperModal: !prevState.cropperModal
-            }));
-        }
         
     };
 
@@ -226,7 +221,10 @@ class Demo extends Component {
             img.src = imgPath;
 
         }else{
-            this.setState({ workingPicturePath: imgPath }, this.onCloseModal);
+            this.setState(prevState => ({
+                workingPicturePath: imgPath,
+                cropperModal: !prevState.cropperModal
+            }), this.onCloseModal);
         }
 
   };
