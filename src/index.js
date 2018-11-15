@@ -391,6 +391,7 @@ class Demo extends Component {
 
 
                      <div id="side-pictures-container">
+                        <h6 className={"Raleway"} style={{color: '#4da6c7'}}>Paginas creadas</h6>
                          <button className={'btn btn-outline-info btn-sm btn-margin'} disabled={this.state.primerImagen == 0} onClick={this.retrocederImagen}>
                              <i className="la la-angle-up"></i>
                          </button>
@@ -417,10 +418,10 @@ class Demo extends Component {
 
                             <div className={'row horizontal-center'}>
 
-                                <button className={'btn btn-outline-info btn-sm btn-margin'} onClick={this.selectPictures} title={"Agregar una nueva foto"}><i className={'la la-cloud-upload'}></i> Fotos</button>
+                                <button className={'btn btn-outline-info btn-sm btn-margin'} onClick={this.selectPictures} title={"Agregar una nueva foto"}><i className={'la la-cloud-upload'}></i> Fotos cargadas</button>
                                 <button className={'btn btn-outline-info btn-sm btn-margin'} onClick={this.selectBackgrouds} title={"Agregar un fondo"}><i className={'la la-image'}></i>Fondos</button>
                                 <button className={'btn btn-outline-info btn-sm btn-margin'} onClick={this.selectEmojis} title={"Agregar un emoji"}><i className={'la la-smile-o'}></i>Emojis</button>
-                                <button className={'btn btn-outline-info btn-sm btn-margin'} onClick={this.onOpenModalText} title={"Agregar texto"}><i className={ 'la la-pencil'}></i> Texto</button>
+                                <button className={'btn btn-outline-info btn-sm btn-margin'} onClick={this.onOpenModalText} title={"Agregar texto"}><i className={ 'la la-pencil'}></i>Crear texto</button>
                             </div>
                         <hr />
 
@@ -438,7 +439,15 @@ class Demo extends Component {
                                         <div id="front-back-separator-left" className={ this.state.images.length <= 0 ? '' : 'hidden'}>
                                             <p>Contratapa</p>
                                         </div>
-
+                                        <div id="front-back-separator" className={ this.state.images.length <= 0 ? '' : 'hidden'}>
+                                            <p>Lomo</p>
+                                        </div>
+                                        <div id="pagina-font-left" className={ this.state.images.length <= 0 ? 'hidden' : '' }>
+                                            <p>Hoja izquierda</p>
+                                        </div>
+                                        <div id="pagina-font-right" className={ this.state.images.length <= 0 ? 'hidden' : ''}>
+                                            <p>Hoja derecha</p>
+                                        </div>
 
                                     <AlbumPageContainer
                                         frameMode={this.state.frameMode}
@@ -459,11 +468,11 @@ class Demo extends Component {
                                     title = {"Borrar ultima imagen agregada"} > 
                                     < i className = {'la la-refresh'} > </i>Revertir cambios
                                 </button >
-                                <button className = {'btn btn-outline-info btn-sm btn-margin' }
+                                <button className = {'btn btn-info btn-sm btn-margin' }
                                     disabled = {this.state.croppedIds == 0}
                                     onClick = {this.saveImg}
                                     title = {"Guardar imagen y pasar a la siguiente hoja" } > 
-                                    < i className = {'la la-save'} > </i> Guardar pagina
+                                    < i className = {'la la-save'} > </i> Guardar y crear nueva pagina
                                 </button >
                                 <button className = {'btn btn-outline-info btn-sm btn-margin'}
                                     disabled = {this.state.images.length == 0}

@@ -115,6 +115,39 @@ hr{
     color: #0000004f
 }
 
+#pagina-font-right{
+    left: 55%;
+    width: 45%;
+    height: 100%;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #0000004f
+}
+
+#pagina-font-left{
+    width: 45%;
+    height: 100%;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #0000004f
+}
+
+#front-back-separator{
+    left: 27.5%;
+    width: 45%;
+    height: 100%;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #0000004f
+}
+
+
 #front-back-separator-left{
 
     width: 45%;

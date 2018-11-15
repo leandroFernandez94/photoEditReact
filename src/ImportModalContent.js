@@ -5,7 +5,7 @@ class ImportModalContent extends React.Component {
     return (
 
       <div id="modal-import-container">
-        <h5> Imagenes :</h5>
+        <h5> Selecciona la imagen que quieres editar haciendo click sobre la misma:</h5>
           <hr/>
           <div className="row">
         {this.props.publicFiles.map(filePath => (

@@ -18,6 +18,9 @@ class CropperModalContent extends React.Component {
     cropImage = () => {
         this.props.cropImage(this.refs.cropper.getCroppedCanvas())
     }
+    revertRotation = () => {
+        this.refs.cropper.rotateTo(0);
+    };
 
     render() {
         return (
@@ -26,9 +29,9 @@ class CropperModalContent extends React.Component {
                 <h5> Edicion: </h5>
                 <hr style={{ border: 0, clear: 'both', display: 'block', width: '100%', backgroundColor:'#4950573d', margin: '0px', height: '1px'}} />
                 <div className={'row horizontal-center'} >
-                    <button className={'btn btn-outline-info btn-sm btn-margin'} onClick={this.cropImage} title={"Guardar seleccion"}>
-                        <i className={'la la-cut'}> </i>
-                        Guardar
+                    <button className={'btn btn-info btn-sm btn-margin'} onClick={this.cropImage} title={"Guardar seleccion"}>
+                        <i className={'la la-save'}> </i>
+                         Listo !
                         </button >
                     <button className={'btn btn-outline-info btn-sm btn-margin'} onClick={this.rotateRight} title={"Rotar a la derecha"} >
                         < i className={'la la-rotate-right'}></i>
@@ -37,6 +40,10 @@ class CropperModalContent extends React.Component {
                     <button className={'btn btn-outline-info btn-sm btn-margin'} onClick={this.rotateLeft} title={"Rotar a la izquierda"} >
                         <i className={'la la-rotate-left'} > </i>
                         Rotar izq.
+                        </button>
+                    <button className={'btn btn-outline-info btn-sm btn-margin'} onClick={this.revertRotation} title={"Revertir rotacion"} >
+                        <i className={'la la-close'} > </i>
+                        Revertir rotacion.
                         </button>
                 </div>
                 <hr style={{ border: 0, clear: 'both', display: 'block', width: '100%', backgroundColor: '#4950573d', margin: '0px', height: '1px' }} />
